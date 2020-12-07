@@ -36,7 +36,6 @@ const deleteArticle = (req, res, next) => {
     .select('+owner')
     .orFail(new NotFoundError('The article has not been found'))
     .then((article) => {
-      console.log('article', article)
       // prohibition to delete other people's articles
       if (article.owner.toString() !== req.user._id.toString()) {
         throw new ForbiddenError('You can\'t delete other people\'s articles');
