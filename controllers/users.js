@@ -8,34 +8,16 @@ const BadRequestError = require('../errors/BadRequestError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const getUsers = (req, res, next) => {
-  User.find({})
-    .then((users) => {
-      if (!users) {
-        throw new NotFoundError('Users are not found');
-      }
-      return res.status(200).send(users);
-    })
-    .catch(next);
-};
-
-const getUser = (req, res, next) => {
-  User.findById(req.params.userId)
-    .orFail(new NotFoundError('The user with such id is not found'))
-    .then((user) => res.status(200).send(user))
-    .catch(next);
-};
-
 const getMe = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new NotFoundError('The user is not found in getMe'))
-    .then((user) => res.status(200).send(user))
+    .orFail(new NotFoundError('The user is not found'))
+    .then(({ email, name }) => res.status(200).send({ email, name }))
     .catch(next);
 };
 
 const createUser = (req, res, next) => {
   const {
-    email, password, name, about, avatar,
+    email, password, name,
   } = req.body;
 
   User.findOne({ email })
@@ -49,45 +31,9 @@ const createUser = (req, res, next) => {
       email,
       password: hash,
       name,
-      about,
-      avatar,
     }))
     // eslint-disable-next-line no-shadow
     .then(({ email, _id }) => res.status(200).send({ email, _id }))
-    .catch(next);
-};
-
-const updateUser = (req, res, next) => {
-  const { name, about } = req.body;
-  const me = req.user._id;
-  User.findByIdAndUpdate(
-    me,
-    { name, about },
-    {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
-      upsert: true, // если пользователь не найден, он будет создан
-    },
-  )
-    .orFail(new NotFoundError('The user is not found in updateUser'))
-    .then((user) => res.status(200).send(user))
-    .catch(next);
-};
-
-const updateAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  const me = req.user._id;
-  User.findByIdAndUpdate(
-    me,
-    { avatar },
-    {
-      new: true,
-      runValidators: true,
-      upsert: true,
-    },
-  )
-    .orFail(new NotFoundError('The user is not found in updateAvatar'))
-    .then((user) => res.status(200).send(user))
     .catch(next);
 };
 
@@ -116,11 +62,7 @@ function login(req, res, next) {
 }
 
 module.exports = {
-  getUser,
-  getUsers,
   createUser,
-  updateUser,
-  updateAvatar,
   login,
   getMe,
 };
