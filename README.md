@@ -25,6 +25,7 @@ A backend part for the news search app on React.js.
 
 * Launch at <http://localhost:3000/> (2 modes):
 > npm run start - production 
+
 > npm run dev - development
 
 ---
