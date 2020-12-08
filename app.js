@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// eslint-disable-next-line no-unused-vars
+const dotenv = require('dotenv').config();
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { routerIndex } = require('./routes/index');
@@ -56,6 +58,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
+  // eslint-disable-next-line
   console.log(`App listening on port ${PORT}`);
 });
