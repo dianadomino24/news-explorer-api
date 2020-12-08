@@ -6,7 +6,7 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET, SALT_ROUND } = process.env;
 
 const getMe = (req, res, next) => {
   User.findById(req.user._id)
@@ -25,7 +25,7 @@ const createUser = (req, res, next) => {
       if (user) {
         throw new ConflictError('This user already exists');
       }
-      return bcrypt.hash(password, 10);
+      return bcrypt.hash(password, SALT_ROUND);
     })
     .then((hash) => User.create({
       email,
