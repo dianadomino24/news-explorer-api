@@ -32,11 +32,12 @@ A backend part for the news search app on React.js.
 
 ## :link: Links to test 
 
-- Project link: 
+- Project link: https://news-explorer-diana.students.nomoreparties.xyz
 
-- Backend domain name: 
+- Backend domain name: https://api.news-explorer-diana.students.nomoreparties.xyz
 
-- Public IP: 
+- Public IP: 178.154.233.146
+
 
 ---
 
