@@ -51,12 +51,10 @@ app.use(() => {
 });
 
 // здесь обрабатываем все ошибки
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
+app.use((err, res) => {
   res.status(err.status || 500).send({ message: err.message || 'Sorry, some error on server.' });
 });
 
 app.listen(PORT, () => {
-  // eslint-disable-next-line
   console.log(`App listening on port ${PORT}`);
 });
