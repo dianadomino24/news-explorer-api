@@ -20,21 +20,21 @@ mongoose.connect('mongodb://localhost:27017/newsdb', {
   useFindAndModify: false,
 });
 
-// const allowedOrigins = [
-//   'https://dianadomino24.students.nomoreparties.space',
-//   'https://www.dianadomino24.students.nomoreparties.space',
-// ];
+const allowedOrigins = [
+  'https://news-explorer-diana.students.nomoreparties.xyz',
+  'https://www.news-explorer-diana.students.nomoreparties.xyz',
+];
 app.use(cors());
 
-// app.use((req, res, next) => {
-//   const { origin } = req.headers;
+app.use((req, res, next) => {
+  const { origin } = req.headers;
 
-//   if (allowedOrigins.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//   }
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
 
-//   next();
-// });
+  next();
+});
 
 app.options('*', cors());
 
@@ -56,5 +56,6 @@ app.use((err, res) => {
 });
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`App listening on port ${PORT}`);
 });

@@ -33,8 +33,7 @@ const createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    // eslint-disable-next-line no-shadow
-    .then(({ email, _id }) => res.status(200).send({ email, _id }))
+    .then((user) => res.status(200).send({ email: user.email, _id: user._id }))
     .catch(next);
 };
 
