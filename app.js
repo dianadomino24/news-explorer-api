@@ -18,7 +18,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect( MONGO_URL || MONGO_DEV_URL, {
+mongoose.connect(MONGO_URL || MONGO_DEV_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

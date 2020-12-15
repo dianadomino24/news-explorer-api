@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   // убеждаемся, что он есть и начинается с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
-  // if (!authorization) {
     throw new UnauthorizedError('Authorization is required');
   }
   // извлечём токен
@@ -21,7 +20,7 @@ module.exports = (req, res, next) => {
     // попытаемся верифицировать токен
     payload = jwt.verify(
       token,
-      NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV_SECRET ,
+      NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV_SECRET,
     );
   } catch (err) {
     throw new UnauthorizedError('Authorization is required, wrong token');
