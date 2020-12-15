@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const {JWT_DEV_SECRET } = require('../config');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 require('dotenv').config();
 
@@ -20,7 +21,7 @@ module.exports = (req, res, next) => {
     // попытаемся верифицировать токен
     payload = jwt.verify(
       token,
-      NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+      NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV_SECRET ,
     );
   } catch (err) {
     throw new UnauthorizedError('Authorization is required, wrong token');

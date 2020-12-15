@@ -1,20 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config();
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { routerIndex } = require('./routes/index');
 const NotFoundError = require('./errors/NotFoundError');
+const { MONGO_DEV_URL } = require('./config');
+const limiter = require('./utils/rate-limiter');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGO_URL } = process.env;
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/newsdb', {
+mongoose.connect( MONGO_URL || MONGO_DEV_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -39,6 +43,8 @@ app.use((req, res, next) => {
 app.options('*', cors());
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use('/', routerIndex);
 app.use(errorLogger);

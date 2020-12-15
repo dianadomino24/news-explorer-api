@@ -36,8 +36,6 @@ A backend part for the news search app on React.js.
 
 - Backend domain name: https://api.news-explorer-diana.students.nomoreparties.xyz
 
-- Public IP: 178.154.233.146
-
 
 ---
 
