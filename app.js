@@ -53,6 +53,7 @@ app.use(() => {
 // здесь обрабатываем все ошибки
 app.use((err, req, res, next) => {
   res.status(err.status || 500).send({ message: err.message || 'Sorry, some error on server.' });
+  next();
 });
 
 app.listen(PORT, () => {
