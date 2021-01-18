@@ -47,7 +47,7 @@ function login(req, res, next) {
 
   User.findOne({ email })
     .select('+password')
-    .orFail(new NotFoundError('This email is not registered'))
+    .orFail(new UnauthorizedError('Incorrect email or password'))
     .then((user) => bcrypt.compare(password, user.password).then((matched) => {
       if (matched) {
         const token = jwt.sign(

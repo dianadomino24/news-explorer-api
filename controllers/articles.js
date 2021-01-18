@@ -42,7 +42,7 @@ const deleteArticle = (req, res, next) => {
         throw new ForbiddenError('You can\'t delete other people\'s articles');
       }
 
-      Article.findByIdAndRemove(req.params.articleId)
+      article.remove()
         .then((deletedArticle) => res.status(200).send(deletedArticle));
     })
     .catch(next);
