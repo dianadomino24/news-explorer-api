@@ -25,6 +25,7 @@ mongoose.connect(MONGO_URL || MONGO_DEV_URL, {
 });
 
 const allowedOrigins = [
+  'https://dianadomino24.github.io/news-explorer-front-final/',
   'https://news-explorer-diana.students.nomoreparties.xyz',
   'https://www.news-explorer-diana.students.nomoreparties.xyz',
 ];
