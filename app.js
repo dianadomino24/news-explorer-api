@@ -26,7 +26,7 @@ mongoose.connect(MONGO_URL || MONGO_DEV_URL, {
 
 const allowedOrigins = [
   'https://dianadomino24.github.io',
-  'https://dianadomino24.github.io/news-explorer-front-final/',
+  'https://dianadomino24.github.io/news-explorer-front-final',
   'https://news-explorer-diana.students.nomoreparties.xyz',
   'https://www.news-explorer-diana.students.nomoreparties.xyz',
 ];
@@ -42,6 +42,14 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('*', cors({
+  origin: ['https://dianadomino24.github.io'],
+  credentials: true,
+}));
+app.use('*', cors({
+  origin: ['https://dianadomino24.github.io/news-explorer-front-final'],
+  credentials: true,
+}));
 app.options('*', cors());
 
 app.use(requestLogger);
