@@ -26,31 +26,41 @@ mongoose.connect(MONGO_URL || MONGO_DEV_URL, {
 
 const allowedOrigins = [
   'https://dianadomino24.github.io',
-  'https://dianadomino24.github.io/news-explorer-front-final',
   'https://news-explorer-diana.students.nomoreparties.xyz',
   'https://www.news-explorer-diana.students.nomoreparties.xyz',
 ];
-app.use(cors());
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
-  next();
-});
-
-app.use('*', cors({
-  origin: ['https://dianadomino24.github.io'],
-  credentials: true,
+app.use(cors({
+  origin(origin, callback) {
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not '
+                + 'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
 }));
-app.use('*', cors({
-  origin: ['https://dianadomino24.github.io/news-explorer-front-final'],
-  credentials: true,
-}));
-app.options('*', cors());
+// app.use(cors());
+
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
+
+//   if (allowedOrigins.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//   }
+
+//   next();
+// });
+
+// app.use('*', cors({
+//   origin: ['https://dianadomino24.github.io'],
+//   credentials: true,
+// }));
+
+// app.options('*', cors());
 
 app.use(requestLogger);
 
