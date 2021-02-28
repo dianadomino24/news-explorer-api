@@ -14,9 +14,7 @@ const limiter = require('./utils/rate-limiter');
 const app = express();
 const { PORT = 3000, MONGO_URL } = process.env;
 
-app.use(cors({
-  origin: 'https://dianadomino24.github.io',
-}));
+app.use(cors());
 
 app.use(helmet());
 app.use(bodyParser.json());
